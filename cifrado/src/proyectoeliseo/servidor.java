@@ -1,16 +1,14 @@
 package proyectoeliseo;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-
-import java.security.*;
-import java.security.spec.X509EncodedKeySpec;
-import org.apache.commons.codec.binary.Base64;
-
 import java.io.*;
 import java.net.*;
+import javax.crypto.*;
+import java.security.*;
+import java.security.spec.*;
+import javax.xml.bind.DatatypeConverter;
+import org.apache.commons.codec.binary.Base64;
+
+
 
 public class servidor extends Thread{
 

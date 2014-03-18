@@ -1,4 +1,4 @@
-package proyectoeliseo;
+package proyectoeliseo.SRV;
 
 import java.io.*;
 import java.net.*;
@@ -9,8 +9,6 @@ import java.security.spec.*;
 import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.codec.binary.Base64;
 
-
-
 public class servidor extends Thread{
 
 	private PublicKey  miClavePublica = null;
@@ -19,35 +17,15 @@ public class servidor extends Thread{
 	private SecretKey clavePriSi = null;
 	private KeyPair miCipher = null;
 	
+        /* Constructor */
 	public servidor(Socket so, PublicKey pu, PrivateKey pri, KeyPair ci){
 		this.miClavePrivada = pri;
 		this.miClavePublica = pu;
 		this.cliSock = so;
 		this.miCipher = ci;
 	}
-	
-	public static void main(String[] args) {
-		try{
-			/*ĝenero claves */
-			
-			KeyPairGenerator keygen = KeyPairGenerator.getInstance("RSA");
-			KeyPair kp = keygen.generateKeyPair();
-			ServerSocket miServer = new ServerSocket();
-			InetSocketAddress add = new InetSocketAddress("localhost", 37773);
-			miServer.bind(add);
-			while(miServer != null){
-				Socket nuevoSocket = miServer.accept();
-				System.out.println("Connection Done.");
-				new servidor(nuevoSocket, kp.getPublic(), kp.getPrivate(), kp).start();
-			}
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		
 
-	}
-
+        /* Hilo Run*/
 	public void run(){
 		try{
 			System.out.println("run");
@@ -87,6 +65,4 @@ public class servidor extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
-
 }

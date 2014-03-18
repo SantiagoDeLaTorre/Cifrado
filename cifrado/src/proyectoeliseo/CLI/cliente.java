@@ -1,4 +1,4 @@
-package proyectoeliseo;
+package proyectoeliseo.CLI;
 
 import java.io.*;
 import java.net.*;
@@ -17,7 +17,6 @@ public class cliente{
 			cli.connect(add);
 			InputStream is = cli.getInputStream();;
 			OutputStream os = cli.getOutputStream();
-                        // lolololol
 			//  Recibir Key publica
 			System.out.println("Recibiendo Key Publica");
 			byte[] leo = new byte[256];

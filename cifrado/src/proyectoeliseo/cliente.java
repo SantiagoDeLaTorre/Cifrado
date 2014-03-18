@@ -2,13 +2,10 @@ package proyectoeliseo;
 
 import java.io.*;
 import java.net.*;
-import java.security.KeyFactory;
-import java.security.PublicKey;
-import java.security.spec.X509EncodedKeySpec;
+import javax.crypto.*;
+import java.security.*;
+import java.security.spec.*;
 import org.apache.commons.codec.binary.Base64;
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 
 public class cliente{
 
@@ -20,7 +17,7 @@ public class cliente{
 			cli.connect(add);
 			InputStream is = cli.getInputStream();;
 			OutputStream os = cli.getOutputStream();
-			
+			//jyg
 			//  Recibir Key publica
 			System.out.println("Recibiendo Key Publica");
 			byte[] leo = new byte[256];

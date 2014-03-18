@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import javax.crypto.*;
 import java.security.*;
+import javax.crypto.spec.*;
 import java.security.spec.*;
 import javax.xml.bind.DatatypeConverter;
 import org.apache.commons.codec.binary.Base64;

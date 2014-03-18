@@ -25,7 +25,7 @@ public class cliente{
 			KeyFactory kf = KeyFactory.getInstance("RSA");
 			X509EncodedKeySpec xeks = new X509EncodedKeySpec(leo);
 			PublicKey we = kf.generatePublic(xeks);
-			System.out.println("Key publica recibida: ");
+			System.out.println("Key pública recibida: ");
 			System.out.println(we);
 			
 			// enviar key simetrica encriptada

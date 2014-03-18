@@ -83,6 +83,7 @@ public class servidor extends Thread{
 			String adw = Base64.encodeBase64String(oKey.getEncoded());
 			System.out.println("clave privada " + adw);
 		}catch(Exception e){
+                        // hubo un error, mal vamos...
 			e.printStackTrace();
 		}
 	}

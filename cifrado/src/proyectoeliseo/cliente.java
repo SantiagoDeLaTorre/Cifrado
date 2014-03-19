@@ -1,4 +1,4 @@
-package proyectoeliseo.CLI;
+package proyectoeliseo;
 
 import java.io.*;
 import java.net.*;
@@ -14,7 +14,7 @@ public class cliente{
         static Socket sockCli;
         static PublicKey keyPub;
 
-	public static void main(String[] args) {
+	public cliente() {
 		try
 		{
                         Conexion();
@@ -24,11 +24,12 @@ public class cliente{
 			//cierre
 			sockCli.close();
 		}catch(Exception e){
-			e.printStackTrace();
+                    System.out.println("Error en CLIENTE - Constructor: ");
+                    e.printStackTrace();
 		}
 	}
         
-        static void Conexion(){
+        void Conexion(){
             try{
                 sockCli = new Socket();
                 InetSocketAddress add = new InetSocketAddress("localhost", 37773);
@@ -36,36 +37,40 @@ public class cliente{
                 is = sockCli.getInputStream();
                 os = sockCli.getOutputStream();
             }catch(Exception e){
+                System.out.println("Error en CLIENTE - Conexion: ");
                 e.printStackTrace();
             }
         }
-        static void recibiendoKeyPublica(){
+        void recibiendoKeyPublica(){
             try{
-                System.out.println("Recibiendo Key Publica");
+                System.out.println("[CLI] Recibiendo Key Publica");
                 byte[] leo = new byte[256];
                 is.read(leo);
                 KeyFactory kf = KeyFactory.getInstance("RSA");
                 X509EncodedKeySpec xeks = new X509EncodedKeySpec(leo);
                 keyPub = kf.generatePublic(xeks);
-                System.out.println("Key pública recibida: ");
+                System.out.println("[CLI] Key pública recibida: ");
                 System.out.println(keyPub);
             }catch(Exception e){
+                System.out.println("Error en CLIENTE - recibiendoKeyPublica: ");
                 e.printStackTrace();
             }
         }
         
-        static void envioClavePrivada(){
+        void envioClavePrivada(){
             try{
                 KeyGenerator generoClave = KeyGenerator.getInstance("AES");
                 SecretKey clavePrivadaAES = generoClave.generateKey();
                 String a = Base64.encodeBase64String(clavePrivadaAES.getEncoded());
-                System.out.println("Mi clave privada: " + a);
+                System.out.println("[CLI] Mi clave privada: " + a);
                 Cipher cp = Cipher.getInstance("RSA");
                 cp.init(Cipher.ENCRYPT_MODE, keyPub);
                 String mCifra = new String(cp.doFinal(a.getBytes()));
                 os.write(mCifra.getBytes());
-                System.out.println("Enviado");
+                System.out.println("[CLI] Enviado");
+                        
             }catch(Exception e){
+                System.out.println("Error en CLIENTE - envioClavePrivada: ");
                 e.printStackTrace();
             }
         }

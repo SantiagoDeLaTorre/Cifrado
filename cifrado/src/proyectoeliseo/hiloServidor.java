@@ -17,14 +17,13 @@ public class hiloServidor extends Thread{
 	private KeyPair miCipher = null;
         InputStream is;
         OutputStream os;
+        SecretKey aesKey;
         
 	public hiloServidor(Socket so, PublicKey pu, PrivateKey pri){
 		this.ClavePrivada = pri;
 		this.ClavePublica = pu;
 		this.cliSock = so;
 	}
-
-        /* Hilo Run*/
 	public void run(){
 		try{
 			envioClavePublica();
@@ -53,21 +52,15 @@ public class hiloServidor extends Thread{
         }
         void recepcionClaveSimetrica(){
             try{
-                byte[] leo = new byte[256/8];
+                byte[] leo = new byte[128];
                 is.read(leo);
                 String aLeo = new String(leo);
-                System.out.println("leo: " + leo);
-                System.out.println("aLeo: " + aLeo);
+                System.out.println("[HSER]Lo que recivo en base64:\n" + Base64.encodeBase64String(leo));
                 Cipher cp = Cipher.getInstance("RSA");
                 cp.init(Cipher.DECRYPT_MODE, ClavePrivada);
-                System.out.println("I no have idea");
-                String descifro = new String(cp.doFinal(aLeo.getBytes()));
-                System.out.println("Decodeado: " + descifro);
-                byte[] aw = DatatypeConverter.parseHexBinary(descifro);
-                byte[] encodedKey     = Base64.decodeBase64(descifro);
-                SecretKey oKey = new SecretKeySpec(descifro.getBytes(), 0, encodedKey.length, "AES");
-                String adw = Base64.encodeBase64String(oKey.getEncoded());
-                System.out.println("clave privada " + adw);
+                byte[] aja = cp.doFinal(leo);
+                aesKey = new SecretKeySpec(aja, "AES");
+                System.out.println("Supuesto Aes: " + Base64.encodeBase64String(aesKey.getEncoded()));
             }catch(Exception e){
                 System.out.println("[HSER] Error en recepcionClaveSimetrica: ");
                 e.printStackTrace();

@@ -9,10 +9,11 @@ import org.apache.commons.codec.binary.Base64;
 
 public class cliente{
     
-        static InputStream is;
-        static OutputStream os;
-        static Socket sockCli;
-        static PublicKey keyPub;
+        InputStream is;
+        OutputStream os;
+        Socket sockCli;
+        PublicKey keyPub;
+        SecretKey clavePrivadaAES;
 
 	public cliente() {
 		try
@@ -56,17 +57,19 @@ public class cliente{
                 e.printStackTrace();
             }
         }
-        
         void envioClavePrivada(){
             try{
+                System.out.println("-------------------------------------");
                 KeyGenerator generoClave = KeyGenerator.getInstance("AES");
-                SecretKey clavePrivadaAES = generoClave.generateKey();
-                String a = Base64.encodeBase64String(clavePrivadaAES.getEncoded());
-                System.out.println("[CLI] Mi clave privada: " + a);
+                clavePrivadaAES = generoClave.generateKey();
+                String aesLeible = Base64.encodeBase64String(clavePrivadaAES.getEncoded());
+                System.out.println("[CLI] AES: " + aesLeible);
                 Cipher cp = Cipher.getInstance("RSA");
                 cp.init(Cipher.ENCRYPT_MODE, keyPub);
-                String mCifra = new String(cp.doFinal(a.getBytes()));
-                os.write(mCifra.getBytes());
+                byte[] aesEncriptado = cp.doFinal(clavePrivadaAES.getEncoded());
+                System.out.println("[CLI] Aes encriptado con key publica: ");
+                System.out.println(Base64.encodeBase64String(aesEncriptado));
+                os.write(aesEncriptado);
                 System.out.println("[CLI] Enviado");
                         
             }catch(Exception e){

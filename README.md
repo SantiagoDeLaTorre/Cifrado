@@ -7,7 +7,7 @@ Proyecto usado para probar github.
 
 Enunciado Original:
 
-AES – RSA - DSA
+AES – RSA - DSA\n
 Se desea programar un servicio de red de descarga de información con transferencia 
 segura. Necesitamos dos aplicaciones:
 • Un servidor seguro, que almacenará archivos de texto.

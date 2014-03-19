@@ -12,7 +12,7 @@ AES – RSA - DSA
 Se desea programar un servicio de red de descarga de información con transferencia 
 segura. Necesitamos dos aplicaciones:
 
-• Un servidor seguro, que almacenará archivos de texto.
+• Un servidor seguro, que almacenará archivos de texto.\r\n
 • Un cliente seguro, que pedirá la descarga de archivos de texto.
 
 

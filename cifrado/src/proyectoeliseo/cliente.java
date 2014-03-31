@@ -15,8 +15,7 @@ public class cliente{
         PublicKey keyPub;
         SecretKey clavePrivadaAES;
 
-        //añado comentario por que soy muy
-        //chulo
+        //añado comentario por que soy muy bueno.
         
 	public cliente() {
 		try

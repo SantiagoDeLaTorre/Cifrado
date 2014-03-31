@@ -9,18 +9,18 @@ import org.apache.commons.codec.binary.Base64;
 
 public class cliente{
     
-        InputStream is;
-        OutputStream os;
-        Socket sockCli;
-        PublicKey keyPub;
-        SecretKey clavePrivadaAES;
+        static InputStream is;
+        static OutputStream os;
+        static Socket sockCli;
+        static PublicKey keyPub;
+        static SecretKey clavePrivadaAES;
 
-        //añado comentario por que soy muy bueno.
-        
-	public cliente() {
-		try
+        public static void main(String[] args){
+            try
 		{
+                        System.out.println("[CLI]Realizando conexion...");
                         Conexion();
+                        System.out.println("[CLI]Connection done.");
                         recibiendoKeyPublica();
                         envioClavePrivada();
                         
@@ -30,9 +30,9 @@ public class cliente{
                     System.out.println("Error en CLIENTE - Constructor: ");
                     e.printStackTrace();
 		}
-	}
+        }
         
-        void Conexion(){
+        static void Conexion(){
             try{
                 sockCli = new Socket();
                 InetSocketAddress add = new InetSocketAddress("localhost", 37773);
@@ -44,7 +44,7 @@ public class cliente{
                 e.printStackTrace();
             }
         }
-        void recibiendoKeyPublica(){
+        static void recibiendoKeyPublica(){
             try{
                 System.out.println("[CLI] Recibiendo Key Publica");
                 byte[] leo = new byte[256];
@@ -59,9 +59,8 @@ public class cliente{
                 e.printStackTrace();
             }
         }
-        void envioClavePrivada(){
+        static void envioClavePrivada(){
             try{
-                System.out.println("-------------------------------------");
                 KeyGenerator generoClave = KeyGenerator.getInstance("AES");
                 clavePrivadaAES = generoClave.generateKey();
                 String aesLeible = Base64.encodeBase64String(clavePrivadaAES.getEncoded());
@@ -72,7 +71,7 @@ public class cliente{
                 System.out.println("[CLI] Aes encriptado con key publica: ");
                 System.out.println(Base64.encodeBase64String(aesEncriptado));
                 os.write(aesEncriptado);
-                System.out.println("[CLI] Enviado");
+                System.out.println("[CLI] Enviado Clave privada");
                         
             }catch(Exception e){
                 System.out.println("Error en CLIENTE - envioClavePrivada: ");

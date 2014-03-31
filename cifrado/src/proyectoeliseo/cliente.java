@@ -2,6 +2,7 @@ package proyectoeliseo;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 import javax.crypto.*;
 import java.security.*;
 import java.security.spec.*;
@@ -14,8 +15,9 @@ public class cliente{
         static Socket sockCli;
         static PublicKey keyPub;
         static SecretKey clavePrivadaAES;
+        static byte[] leo = new byte[256];
 
-        public static void main(String[] args){
+        public static void main(String[] args) throws IOException{
             try
 		{
                         System.out.println("[CLI]Realizando conexion...");
@@ -23,15 +25,31 @@ public class cliente{
                         System.out.println("[CLI]Connection done.");
                         recibiendoKeyPublica();
                         envioClavePrivada();
-                        
-			//cierre
-			sockCli.close();
+                        while(true){
+                            System.out.println("Hey!");
+                            is.read(leo);
+                            String as;
+                            System.out.println(as = new String(Base64.decodeBase64(leo)));
+                            if(as.)
+                                menu();
+                        }			
 		}catch(Exception e){
                     System.out.println("Error en CLIENTE - Constructor: ");
                     e.printStackTrace();
-		}
+		}finally{
+                sockCli.close();
+            }
         }
-        
+        static void menu() throws IOException{
+            System.out.println("Hou!");
+             is.read(leo);
+             System.out.println(new String(Base64.decodeBase64(leo)));
+             Scanner sc = new Scanner(System.in);
+             String cadena = sc.nextLine();
+             os.write(Base64.encodeBase64(cadena.getBytes()));
+             is.read(leo);
+             System.out.println(new String(Base64.decodeBase64(leo)));
+        }
         static void Conexion(){
             try{
                 sockCli = new Socket();

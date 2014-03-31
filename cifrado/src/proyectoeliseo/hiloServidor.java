@@ -28,12 +28,59 @@ public class hiloServidor extends Thread{
 		try{
 			envioClavePublica();
 			recepcionClaveSimetrica();
+                        menu();
 		}catch(Exception e){
                         // hubo un error, mal vamos...
                     System.out.println("Error en HSER: ");
                     e.printStackTrace();
 		}
 	}
+        
+        void menu(){
+            try{
+            byte[] Opcion = new byte[256];
+            String men = "MENU";
+            os.write(Base64.encodeBase64(men.getBytes()));
+            men = "Menu\n\t[1]Cifrado MD5\n\t[2]Cifrado SHA1";
+            os.write(Base64.encodeBase64(men.getBytes()));
+            is.read(Opcion);
+            String opc = new String(Base64.decodeBase64(Opcion));
+                switch (opc) {
+                    case "1":
+                        opcionMD5();
+                        break;
+                    case "2":
+                        opcionSHA1();
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        
+        void opcionMD5(){
+            try{
+                byte[] leo = new byte[256];
+                os.write(Base64.encodeBase64("Frase a transformar en MD5: ".getBytes()));
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                is.read(leo);
+                md.update(leo);
+                leo = md.digest();
+                os.write(Base64.encodeBase64(leo));
+            }catch(Exception e){
+            e.printStackTrace();
+        }
+            
+        }
+        void opcionSHA1(){
+            try{
+                os.write(Base64.encodeBase64("Frase a transformar en SHA1: ".getBytes()));
+            }catch(Exception e){
+            e.printStackTrace();
+        }
+        }
         void envioClavePublica(){
             try{
                 System.out.println("[HSER] Run");
